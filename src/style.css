@@ -1,0 +1,59 @@
+:root{font-family:Arial,Helvetica,sans-serif;color:#f4f3ee;background:#253c2e;font-size:14px;font-weight:400;font-synthesis:none}*{box-sizing:border-box}html,body,#root{height:100%;margin:0;overflow:hidden}a{color:inherit;text-underline-offset:2px}a:hover,a[aria-current]{color:#527a48}a:focus-visible,main:focus-visible{outline:2px solid #eee;outline-offset:3px}p,h1{font-size:inherit;font-weight:400;line-height:1.3;margin:0}h1,p,nav,footer{text-transform:lowercase}.site{height:100dvh;display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding:20px 50px;overflow:hidden}header{display:grid;grid-template-columns:minmax(196px,1fr) 125px 164px 225px;gap:40px;padding-bottom:24px}.logo{display:block;width:196px;height:72px}.logo img{width:100%;height:100%;object-fit:contain}nav{display:flex;flex-direction:column;gap:32px}.hours p:first-child,.contact p:first-child{margin-bottom:30px}.hours p:nth-child(2){margin-bottom:30px}.contact p:nth-child(2){margin-bottom:18px}.plain{text-decoration:none}main{min-height:0;overflow:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#527a48 transparent}.page{min-height:100%;padding-top:8px;padding-bottom:24px}.page-home{height:100%;padding:0;overflow:hidden}.enter{animation:page-in 360ms ease-out both}.exit{animation:page-out 260ms ease-in both;pointer-events:none}@keyframes page-in{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:translateY(0)}}@keyframes page-out{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(36px)}}.copy{max-width:782px}.copy>h1{margin-bottom:56px}.copy p{margin-bottom:18px}.copy>p:first-child{margin-bottom:24px}.menu article{margin-bottom:28px}.menu h1,.menu p{margin-bottom:18px}.gallery{max-width:782px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px}.gallery img{width:100%;height:325px;object-fit:cover}footer{display:flex;justify-content:center;align-items:center;gap:64px;padding-top:22px;line-height:1.3;background:#253c2e;z-index:1}footer span{text-decoration:underline;text-underline-offset:2px}@media(prefers-reduced-motion:reduce){.enter,.exit{animation:none}}@media(max-width:1100px){.site{padding:20px 30px}header{grid-template-columns:minmax(170px,1fr) 85px 125px 175px;gap:22px}.logo{width:170px}.gallery{gap:20px}.gallery img{height:280px}footer{gap:36px}}@media(max-width:700px){.site{padding:16px 20px}header{grid-template-columns:1fr 1fr;gap:20px;padding-bottom:20px}.logo{width:155px;height:58px}.primary{grid-column:2;grid-row:1}nav{gap:12px}.hours{grid-column:1;grid-row:2}.contact{grid-column:2;grid-row:2}.hours p:first-child,.contact p:first-child{margin-bottom:12px}.hours p:nth-child(2){margin-bottom:12px}.contact p:nth-child(2){margin-bottom:12px}.contact{overflow-wrap:anywhere}.copy>h1{margin-bottom:32px}.gallery{grid-template-columns:repeat(2,1fr);gap:16px}.gallery img{height:235px}footer{gap:12px 20px;flex-wrap:wrap;font-size:12px;padding-top:16px}.page{padding-top:12px}.page-home{padding:0}}@media(max-height:550px){header{padding-bottom:12px}nav{gap:12px}.hours p:first-child,.contact p:first-child{margin-bottom:12px}.hours p:nth-child(2),.contact p:nth-child(2){margin-bottom:12px}.site{padding-top:12px;padding-bottom:12px}footer{padding-top:12px}}
+
+/* Shared header: navigation stays at the right edge. */
+header{grid-template-columns:minmax(196px,1fr) 164px 225px 65px}
+.logo{grid-column:1;grid-row:1}.hours{grid-column:2;grid-row:1}.contact{grid-column:3;grid-row:1}.primary{grid-column:4;grid-row:1;text-align:right}.primary nav{align-items:flex-end}
+.menu-card{width:600px;max-width:100%;height:auto;background:#e7e0d5;color:#111;padding:30px 28px 34px;margin:0 auto}
+.menu-card h1,.menu-card h2,.menu-card p{text-transform:none}
+.menu-card>h1{font-size:28px;font-weight:600;text-align:center;line-height:1.2;margin:0 0 30px}
+.menu-item{margin:0 0 24px}.menu-item:last-child{margin-bottom:0}
+.menu-item-heading{display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin-bottom:8px}
+.menu-item-heading h2{font-size:19px;line-height:1.3;font-weight:500;margin:0}
+.menu-price{font-size:19px;white-space:nowrap;flex-shrink:0;font-variant-numeric:tabular-nums}
+.menu-description{font-size:16px;line-height:1.5;width:100%}
+@media(max-width:1100px){header{grid-template-columns:minmax(170px,1fr) 125px 175px 65px}}
+@media(max-width:700px){header{grid-template-columns:1fr 1fr}.logo{grid-column:1;grid-row:1}.primary{grid-column:2;grid-row:1}.hours{grid-column:1;grid-row:2}.contact{grid-column:2;grid-row:2}.menu-card{padding:24px 20px}.menu-card>h1{font-size:25px;margin-bottom:26px}.menu-item-heading h2,.menu-price{font-size:18px}.menu-description{font-size:15px}}
+/* Keep menu descriptions and dish names typographically consistent. */
+.menu-card>h1{font-weight:400}
+.menu-item-heading h2,.menu-description{font-size:19px;font-weight:400;line-height:1.3}
+.menu-description{color:#444}
+@media(max-width:700px){.menu-item-heading h2,.menu-description{font-size:18px}}
+.page-menu{padding-top:23px}
+.menu-card{padding-top:60px;padding-bottom:64px}
+@media(max-width:700px){.page-menu{padding-top:27px}.menu-card{padding-top:54px;padding-bottom:54px}}
+
+/* Let the home animation reach the viewport edges. */
+main.home-frame{margin-left:-50px;margin-right:-50px}
+@media(max-width:1100px){main.home-frame{margin-left:-30px;margin-right:-30px}}
+@media(max-width:700px){main.home-frame{margin-left:-20px;margin-right:-20px}}
+
+/* The café's striped awning and warm festoon lights. */
+.page-home{position:relative}
+.awning{position:absolute;inset:0 0 auto;height:160px;z-index:1;pointer-events:none}
+.awning-canopy{height:76px;background:repeating-linear-gradient(103deg,#e7e0d5 0 43px,#253c2e 43px 86px);box-shadow:inset 0 -18px 22px #0002;border-top:1px solid #eee5;transform-origin:top;clip-path:polygon(0 0,100% 0,100% 90%,0 100%)}
+.awning-valance{position:absolute;top:67px;left:0;right:0;height:29px;background:repeating-linear-gradient(103deg,#e7e0d5 0 43px,#253c2e 43px 86px);border-top:3px solid #172a20;box-shadow:0 5px 9px #0002;clip-path:polygon(0 0,100% 0,100% 85%,98% 100%,96% 85%,94% 100%,92% 85%,90% 100%,88% 85%,86% 100%,84% 85%,82% 100%,80% 85%,78% 100%,76% 85%,74% 100%,72% 85%,70% 100%,68% 85%,66% 100%,64% 85%,62% 100%,60% 85%,58% 100%,56% 85%,54% 100%,52% 85%,50% 100%,48% 85%,46% 100%,44% 85%,42% 100%,40% 85%,38% 100%,36% 85%,34% 100%,32% 85%,30% 100%,28% 85%,26% 100%,24% 85%,22% 100%,20% 85%,18% 100%,16% 85%,14% 100%,12% 85%,10% 100%,8% 85%,6% 100%,4% 85%,2% 100%,0 85%)}
+.awning-lights{position:absolute;top:75px;left:0;width:100%;height:80px;overflow:visible}
+.light-cable,.light-drop{fill:none;stroke:#18251d;stroke-width:2}.light-socket{fill:#18251d}.light-bulb{fill:#ffdf94;filter:drop-shadow(0 0 5px #ffd16d) drop-shadow(0 0 12px #ffcc6277)}
+@media(max-width:700px){.awning{height:115px}.awning-canopy{height:48px}.awning-valance{top:41px;height:22px}.awning-lights{top:48px;height:60px}}
+/* Consistent content cards across the main frame. */
+.page:not(.page-home){padding-top:38px}
+.copy,.gallery{width:600px;max-width:100%;height:auto;margin:0 auto;background:#e7e0d5;color:#111;padding:60px 28px 64px}
+.copy h1,.copy p,.copy li{text-transform:none;font-size:19px;font-weight:400;line-height:1.3}
+.copy>h1{font-size:28px;text-align:center;margin-bottom:30px}
+.copy p{margin-bottom:24px}.copy p:last-child{margin-bottom:0}
+.copy ul{padding-left:22px}.copy li{margin-bottom:8px}
+.copy a:hover{color:#527a48}
+.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.gallery img{height:300px;display:block}
+@media(max-width:700px){.page:not(.page-home){padding-top:42px}.copy,.gallery{padding:54px 20px}.copy h1,.copy p,.copy li{font-size:18px}.copy>h1{font-size:25px}.gallery{gap:16px}.gallery img{height:235px}}
+@media(max-width:400px){.gallery{gap:12px}.gallery img{height:190px}}
+/* Descriptions use the same typography as the header contact details. */
+.menu-description{font-family:inherit;font-size:14px;font-weight:400;line-height:1.3;text-transform:lowercase;color:#444}
+/* Keep non-menu content on the site's green background. */
+.copy,.gallery{background:transparent;color:#f4f3ee}
+.copy h1,.copy p,.copy li{font-size:14px;font-weight:400;line-height:1.3;text-transform:lowercase}
+.copy>h1{font-size:14px;text-align:left;margin-bottom:56px}
+.copy p{margin-bottom:18px}.copy>p:first-child{margin-bottom:24px}.copy p:last-child{margin-bottom:0}
+@media(max-width:700px){.menu-description{font-size:14px}.copy h1,.copy p,.copy li{font-size:14px}.copy>h1{font-size:14px;margin-bottom:32px}}
+.menu-price{font-family:inherit;font-size:14px;font-weight:400;line-height:1.3}
+.awning-canopy{border-top:0}
