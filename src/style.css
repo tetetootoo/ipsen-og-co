@@ -57,3 +57,25 @@ main.home-frame{margin-left:-50px;margin-right:-50px}
 @media(max-width:700px){.menu-description{font-size:14px}.copy h1,.copy p,.copy li{font-size:14px}.copy>h1{font-size:14px;margin-bottom:32px}}
 .menu-price{font-family:inherit;font-size:14px;font-weight:400;line-height:1.3}
 .awning-canopy{border-top:0}
+
+.mobile-awning{display:none}
+@media(max-width:700px){
+ footer{font-size:14px;font-weight:400;line-height:1.3}
+ .home header{grid-template-rows:auto 115px auto;gap:16px 20px;padding-bottom:16px}
+ .home .mobile-awning{display:block;position:relative;grid-column:1/-1;grid-row:2;height:115px;margin-left:-20px;margin-right:-20px}
+ .home .hours{grid-row:3}.home .contact{grid-row:3}
+ .home .page-home>.awning{display:none}
+}
+
+.home-info{display:none}
+@media(max-width:700px){
+ .home header{grid-template-rows:auto 115px;padding-bottom:0}
+ .home header>.hours,.home header>.contact{display:none}
+ .home-info{display:grid;grid-template-columns:1fr 1fr;gap:20px;position:absolute;top:50%;left:20px;right:20px;transform:translateY(-50%);z-index:2;pointer-events:none}
+ .home-info .hours,.home-info .contact{grid-row:1;min-width:0}
+ .home-info a{pointer-events:auto}
+}
+@media(max-width:700px){.home .mobile-awning{margin-top:30px}.home header{grid-template-rows:auto 145px}}
+@media(max-width:700px){
+ .home-info{position:fixed;top:50dvh;left:20px;right:20px;transform:translateY(-50%)}
+}
