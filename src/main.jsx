@@ -19,8 +19,6 @@ function Awning(){
 }
 function App(){
  const [section,setSection] = useState(readSection);
- const [mobile,setMobile] = useState(()=>window.matchMedia('(max-width:700px)').matches);
- useEffect(()=>{const query=window.matchMedia('(max-width:700px)');const update=()=>setMobile(query.matches);query.addEventListener('change',update);return()=>query.removeEventListener('change',update)},[]);
  const [phase,setPhase] = useState('enter');
  const target = useRef(section);
  const frame = useRef(null);
@@ -49,7 +47,7 @@ function App(){
  <div className="contact"><p>kontakt</p><p>ipsen & co<br/>gammel kongevej 108<br/>1850 frederiksberg.</p><a className="plain" href="mailto:cafe@ipsenogco.dk">cafe@ipsenogco.dk</a></div>
  </header>
  <main id="content" className={section==='home'?'home-frame':undefined} ref={frame} tabIndex={0} aria-label="Café indhold"><div key={section} className={`page page-${section} ${phase}`}>
- {section==='home'&&<><WanderingElements elementCount={mobile?7:14} fadeEdge={0} images={[1,2,3,4].map(n=>`/assets/pastry-${n}.png`)} /></>}
+ {section==='home'&&<><WanderingElements elementCount={4} fadeEdge={0} images={[1,2,3,4].map(n=>`/assets/pastry-${n}.png`)} /></>}
  {section==='menu'&&<section className="menu-card" aria-labelledby="menu-title"><h1 id="menu-title">Menu</h1>{menu.map(([name,price,description])=><article className="menu-item" key={name}><div className="menu-item-heading"><h2>{name}</h2><p className="menu-price">{price}</p></div>{description&&<p className="menu-description">{description}</p>}</article>)}</section>}
  {sections[section]&&<div className="copy">{sections[section].map((text,i)=>i===0&&section!=='events'?<h1 key={text}>{text}</h1>:<p key={text}>{text}</p>)}{section==='jobs'&&<><ul><li>Kort ansøgning</li><li>Evt Billede</li><li>Relevant erfaring / CV</li><li>Info om deltid/fuldtid</li></ul><p>Sendes til <a href="mailto:cafe@ipsenogco.dk">Cafe@ipsenogco.dk</a></p></>}</div>}
  {section==='gallery'&&<div className="gallery">{[1,2,3,4,5,6].map(n=><img key={n} src={`/assets/gallery-${n}.${n===2?'jpg':'png'}`} alt={['Detaljer fra caféens indretning','Morgenmad på Ipsen & Co','Caféens udeservering','En hyggelig krog i caféen','Lys og stemning i caféen','Ipsen & Co på Gammel Kongevej'][n-1]} loading="lazy"/>)}</div>}

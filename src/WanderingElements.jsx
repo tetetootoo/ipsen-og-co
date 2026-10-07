@@ -10,15 +10,15 @@ function resolveImageSrc(value) {
 
 export default function WanderingElements({
     images = [],
-    elementCount = 14,
+    elementCount = images.length,
     minSize = 60,
     maxSize = 140,
-    minDuration = 18,
-    maxDuration = 40,
+    minDuration = 45,
+    maxDuration = 80,
     verticalRangeStart = 5,
     verticalRangeEnd = 95,
     wobbleAmplitude = 20,
-    wobbleSpeed = 0.5,
+    wobbleSpeed = 0.25,
     rotationAmount = 6,
     direction = "leftToRight",
     fadeEdge = 10,
@@ -31,7 +31,7 @@ export default function WanderingElements({
 
     const isCanvas = false
 
-    const validSrcs = images.map(resolveImageSrc).filter(Boolean)
+    const validSrcs = [...new Set(images.map(resolveImageSrc).filter(Boolean))]
     const srcsKey = validSrcs.join("|")
 
     // Each wanderer gets its own randomized lane, speed, size, and phase so
@@ -39,11 +39,11 @@ export default function WanderingElements({
     // scattered, independent drift of strom.cafe's floating letters.
     const wanderers = useMemo(() => {
         if (validSrcs.length === 0) return []
-        const count = Math.max(1, Math.round(elementCount))
+        const count = Math.min(validSrcs.length, Math.max(0, Math.round(elementCount)))
         const list = []
         for (let i = 0; i < count; i++) {
             list.push({
-                src: validSrcs[i % validSrcs.length],
+                src: validSrcs[i],
                 laneY:
                     (verticalRangeStart +
                         Math.random() *
