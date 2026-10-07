@@ -60,6 +60,8 @@ main.home-frame{margin-left:-50px;margin-right:-50px}
 
 @media(max-width:700px){
  footer{font-size:14px;font-weight:400;line-height:1.3}
+ footer a[href^="mailto:"]{display:none}
+ .contact a[href^="mailto:"]{text-decoration:underline}
 }
 
 /* Place the home awning above the logo and navigation bar. */
