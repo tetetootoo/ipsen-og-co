@@ -13,8 +13,8 @@ export default function WanderingElements({
     elementCount = images.length,
     minSize = 60,
     maxSize = 140,
-    minDuration = 45,
-    maxDuration = 80,
+    minDuration = 90,
+    maxDuration = 150,
     verticalRangeStart = 5,
     verticalRangeEnd = 95,
     wobbleAmplitude = 20,
@@ -81,7 +81,7 @@ export default function WanderingElements({
         const dir = direction === "rightToLeft" ? -1 : 1
         let pointer = null
         let previousTime = null
-        const offsets = wanderers.map(() => ({ x: 0, y: 0 }))
+        const offsets = wanderers.map(() => ({ y: 0, side: 0 }))
         const trackPointer = (event) => {
             pointer = event.pointerType === "touch" ? null : { x: event.clientX, y: event.clientY }
         }
@@ -103,7 +103,7 @@ export default function WanderingElements({
             const bounds = container?.getBoundingClientRect()
             const delta = previousTime === null ? 1 / 60 : Math.min((t - previousTime) / 1000, 0.05)
             previousTime = t
-            const easing = 1 - Math.exp(-8 * delta)
+            const easing = 1 - Math.exp(-0.65 * delta)
 
             wanderers.forEach((w, i) => {
                 const el = itemRefs.current[i]
@@ -134,8 +134,8 @@ export default function WanderingElements({
                     )
                 }
 
-                let avoidX = 0
                 let avoidY = 0
+                const offset = offsets[i]
                 if (pointer && bounds && !reducedMotion.matches) {
                     const imageWidth = el.offsetWidth || w.size
                     const dx = bounds.left + x + imageWidth / 2 - pointer.x
@@ -143,16 +143,17 @@ export default function WanderingElements({
                     const distance = Math.hypot(dx, dy)
                     const radius = Math.max(imageWidth, w.size) / 2 + 100
                     if (distance < radius) {
-                        const strength = (1 - distance / radius) * 150
-                        avoidX = distance > 1 ? dx / distance * strength : strength
-                        avoidY = distance > 1 ? dy / distance * strength : 0
-                    }
-                }
-                const offset = offsets[i]
-                offset.x += (avoidX - offset.x) * easing
+                        // Hold one bend direction throughout an encounter;
+                        // horizontal drift continues without orbiting the cursor.
+                        if (offset.side === 0) offset.side = dy < 0 ? -1 : 1
+                        const proximity = 1 - distance / radius
+                        const strength = proximity * proximity * (3 - 2 * proximity)
+                        avoidY = offset.side * strength * 22
+                    } else offset.side = 0
+                } else offset.side = 0
                 offset.y += (avoidY - offset.y) * easing
                 const displacedY = Math.max(0, Math.min(Math.max(0, height - w.size), y + offset.y))
-                el.style.transform = `translate(${x + offset.x}px, ${displacedY}px) rotate(${rotation}deg)`
+                el.style.transform = `translate(${x}px, ${displacedY}px) rotate(${rotation}deg)`
                 el.style.opacity = String(Math.max(0, opacity))
             })
 
