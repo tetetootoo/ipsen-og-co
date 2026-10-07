@@ -77,6 +77,7 @@ main.home-frame{margin-left:-50px;margin-right:-50px}
 .header-details{display:contents}
 @media(max-width:700px){
  header{grid-template-columns:1fr}
+ .logo{justify-self:center}
  .header-details{display:grid;grid-column:1;grid-row:2;grid-template-columns:55px 90px minmax(0,1fr);gap:12px;align-items:start}
  .header-details .primary{grid-column:1;grid-row:1;text-align:left}
  .header-details .primary nav{align-items:flex-start}
