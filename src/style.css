@@ -72,3 +72,15 @@ main.home-frame{margin-left:-50px;margin-right:-50px}
  .site.home{grid-template-rows:130px auto minmax(0,1fr) auto}
  .home-awning{margin-left:-20px;margin-right:-20px}
 }
+
+/* Mobile information forms one row, centered vertically on the home screen. */
+.header-details{display:contents}
+@media(max-width:700px){
+ header{grid-template-columns:1fr}
+ .header-details{display:grid;grid-column:1;grid-row:2;grid-template-columns:55px 90px minmax(0,1fr);gap:12px;align-items:start}
+ .header-details .primary{grid-column:1;grid-row:1;text-align:left}
+ .header-details .primary nav{align-items:flex-start}
+ .header-details .hours{grid-column:2;grid-row:1}
+ .header-details .contact{grid-column:3;grid-row:1;min-width:0}
+ .home .header-details{position:fixed;top:50dvh;left:20px;right:20px;transform:translateY(-50%);z-index:2}
+}
