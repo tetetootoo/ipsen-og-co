@@ -79,11 +79,11 @@ main.home-frame{margin-left:-50px;margin-right:-50px}
 @media(max-width:700px){
  header{grid-template-columns:1fr}
  .logo{justify-self:center}
- .header-details{display:grid;grid-column:1;grid-row:2;grid-template-columns:max-content max-content minmax(0,1fr);gap:20px;align-items:start;position:fixed;top:146px;left:20px;right:20px;transform:translateY(0);z-index:2;transition:top 1.2s cubic-bezier(.22,1,.36,1),transform 1.2s cubic-bezier(.22,1,.36,1)}
- .header-details .primary{grid-column:1;grid-row:1;text-align:left}
+ .header-details{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;position:fixed;top:146px;left:0;right:0;padding:0 20px;transform:translateY(0);z-index:2;transition:top 1.2s cubic-bezier(.22,1,.36,1),transform 1.2s cubic-bezier(.22,1,.36,1)}
+ .header-details .primary{flex:0 0 auto;text-align:left}
  .header-details .primary nav{align-items:flex-start}
- .header-details .hours{grid-column:2;grid-row:1}
- .header-details .contact{grid-column:3;grid-row:1;min-width:0}
+ .header-details .hours{flex:0 0 auto}
+ .header-details .contact{flex:0 1 auto;min-width:0}
  .home .header-details{top:50dvh;transform:translateY(-50%)}
 }
 
