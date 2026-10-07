@@ -40,7 +40,7 @@ function App(){
  },[section]);
  const nav = keys => <nav aria-label={keys[0]==='menu'?'Café':'Arrangementer'}>{keys.map(key=><a key={key} href={`#${key}`} aria-current={section===key?'page':undefined}>{labels[key]}</a>)}</nav>;
  return <div className={`site ${section==='home'?'home':'inside'}`}>
- {section==='home'&&<div className="home-awning"><Awning/></div>}
+ <div className="home-awning"><Awning/></div>
  <header><a className="logo" href="#" aria-label="Ipsen & Co – forsiden"><img src="/assets/logo.webp" alt="Café Ipsen & Co · God dag & god smag"/></a>
  <div className="header-details">
  <div className="primary">{nav(['menu','om-os','gallery'])}</div>
