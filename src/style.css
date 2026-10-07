@@ -62,23 +62,13 @@ main.home-frame{margin-left:-50px;margin-right:-50px}
  footer{font-size:14px;font-weight:400;line-height:1.3}
 }
 
-.home-info{display:none}
-@media(max-width:700px){
- .home header{grid-template-rows:auto;padding-bottom:0}
- .home header>.hours,.home header>.contact{display:none}
- .home-info{display:grid;grid-template-columns:1fr 1fr;gap:20px;position:absolute;top:50%;left:20px;right:20px;transform:translateY(-50%);z-index:2;pointer-events:none}
- .home-info .hours,.home-info .contact{grid-row:1;min-width:0}
- .home-info a{pointer-events:auto}
-}
-@media(max-width:700px){
- .home-info{position:fixed;top:50dvh;left:20px;right:20px;transform:translateY(-50%)}
-}
-
 /* Place the home awning above the logo and navigation bar. */
-.site.home{grid-template-rows:160px auto minmax(0,1fr) auto;padding-top:0}
+.site.home{grid-template-rows:180px auto minmax(0,1fr) auto;padding-top:0}
+.home header{align-items:start}
+.home .logo,.home .primary{align-self:start}
 .home-awning{position:relative;margin-left:-50px;margin-right:-50px}
 @media(max-width:1100px){.home-awning{margin-left:-30px;margin-right:-30px}}
 @media(max-width:700px){
- .site.home{grid-template-rows:115px auto minmax(0,1fr) auto}
+ .site.home{grid-template-rows:130px auto minmax(0,1fr) auto}
  .home-awning{margin-left:-20px;margin-right:-20px}
 }

@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
-import { createPortal } from 'react-dom';
 import { menu, sections } from './content';
 import './style.css';
 import WanderingElements from './WanderingElements';
@@ -50,8 +49,7 @@ function App(){
  <div className="contact"><p>kontakt</p><p>ipsen & co<br/>gammel kongevej 108<br/>1850 frederiksberg.</p><a className="plain" href="mailto:cafe@ipsenogco.dk">cafe@ipsenogco.dk</a></div>
  </header>
  <main id="content" className={section==='home'?'home-frame':undefined} ref={frame} tabIndex={0} aria-label="Café indhold"><div key={section} className={`page page-${section} ${phase}`}>
- {section==='home'&&<>{mobile&&createPortal(<div className="home-info"> <div className="hours"><p>åbningstider</p><p>ma - sø<br/>8 - 17.30</p><a href="https://www.google.com/maps?ll=55.676071,12.543777&z=14&t=m&hl=de-DE&gl=US&mapclient=embed&q=Gl.+Kongevej+108+1850+Frederiksberg+D%C3%A4nemark" target="_blank" rel="noreferrer">find vej</a></div>
- <div className="contact"><p>kontakt</p><p>ipsen & co<br/>gammel kongevej 108<br/>1850 frederiksberg.</p><a className="plain" href="mailto:cafe@ipsenogco.dk">cafe@ipsenogco.dk</a></div></div>,document.body)}<WanderingElements elementCount={mobile?7:14} fadeEdge={0} images={[1,2,3,4].map(n=>`/assets/pastry-${n}.png`)} /></>}
+ {section==='home'&&<><WanderingElements elementCount={mobile?7:14} fadeEdge={0} images={[1,2,3,4].map(n=>`/assets/pastry-${n}.png`)} /></>}
  {section==='menu'&&<section className="menu-card" aria-labelledby="menu-title"><h1 id="menu-title">Menu</h1>{menu.map(([name,price,description])=><article className="menu-item" key={name}><div className="menu-item-heading"><h2>{name}</h2><p className="menu-price">{price}</p></div>{description&&<p className="menu-description">{description}</p>}</article>)}</section>}
  {sections[section]&&<div className="copy">{sections[section].map((text,i)=>i===0&&section!=='events'?<h1 key={text}>{text}</h1>:<p key={text}>{text}</p>)}{section==='jobs'&&<><ul><li>Kort ansøgning</li><li>Evt Billede</li><li>Relevant erfaring / CV</li><li>Info om deltid/fuldtid</li></ul><p>Sendes til <a href="mailto:cafe@ipsenogco.dk">Cafe@ipsenogco.dk</a></p></>}</div>}
  {section==='gallery'&&<div className="gallery">{[1,2,3,4,5,6].map(n=><img key={n} src={`/assets/gallery-${n}.${n===2?'jpg':'png'}`} alt={['Detaljer fra caféens indretning','Morgenmad på Ipsen & Co','Caféens udeservering','En hyggelig krog i caféen','Lys og stemning i caféen','Ipsen & Co på Gammel Kongevej'][n-1]} loading="lazy"/>)}</div>}
