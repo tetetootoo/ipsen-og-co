@@ -79,6 +79,19 @@ export default function WanderingElements({
         const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
 
         const dir = direction === "rightToLeft" ? -1 : 1
+        let pointer = null
+        let previousTime = null
+        const offsets = wanderers.map(() => ({ x: 0, y: 0 }))
+        const trackPointer = (event) => {
+            pointer = event.pointerType === "touch" ? null : { x: event.clientX, y: event.clientY }
+        }
+        const clearPointer = () => { pointer = null }
+        const leaveWindow = (event) => {
+            if (!event.relatedTarget) clearPointer()
+        }
+        window.addEventListener("pointermove", trackPointer)
+        window.addEventListener("pointerout", leaveWindow)
+        window.addEventListener("blur", clearPointer)
 
         const loop = (t) => {
             if (startTime.current === null) startTime.current = t
@@ -87,6 +100,10 @@ export default function WanderingElements({
             const container = containerRef.current
             const width = container?.clientWidth ?? 0
             const height = container?.clientHeight ?? 0
+            const bounds = container?.getBoundingClientRect()
+            const delta = previousTime === null ? 1 / 60 : Math.min((t - previousTime) / 1000, 0.05)
+            previousTime = t
+            const easing = 1 - Math.exp(-8 * delta)
 
             wanderers.forEach((w, i) => {
                 const el = itemRefs.current[i]
@@ -117,7 +134,25 @@ export default function WanderingElements({
                     )
                 }
 
-                el.style.transform = `translate(${x}px, ${y}px) rotate(${rotation}deg)`
+                let avoidX = 0
+                let avoidY = 0
+                if (pointer && bounds && !reducedMotion.matches) {
+                    const imageWidth = el.offsetWidth || w.size
+                    const dx = bounds.left + x + imageWidth / 2 - pointer.x
+                    const dy = bounds.top + y + w.size / 2 - pointer.y
+                    const distance = Math.hypot(dx, dy)
+                    const radius = Math.max(imageWidth, w.size) / 2 + 100
+                    if (distance < radius) {
+                        const strength = (1 - distance / radius) * 150
+                        avoidX = distance > 1 ? dx / distance * strength : strength
+                        avoidY = distance > 1 ? dy / distance * strength : 0
+                    }
+                }
+                const offset = offsets[i]
+                offset.x += (avoidX - offset.x) * easing
+                offset.y += (avoidY - offset.y) * easing
+                const displacedY = Math.max(0, Math.min(Math.max(0, height - w.size), y + offset.y))
+                el.style.transform = `translate(${x + offset.x}px, ${displacedY}px) rotate(${rotation}deg)`
                 el.style.opacity = String(Math.max(0, opacity))
             })
 
@@ -126,6 +161,9 @@ export default function WanderingElements({
 
         rafId.current = requestAnimationFrame(loop)
         return () => {
+            window.removeEventListener("pointermove", trackPointer)
+            window.removeEventListener("pointerout", leaveWindow)
+            window.removeEventListener("blur", clearPointer)
             if (rafId.current !== undefined) cancelAnimationFrame(rafId.current)
             startTime.current = null
         }
@@ -192,4 +230,3 @@ export default function WanderingElements({
         </div>
     )
 }
-
