@@ -17,7 +17,7 @@ export default function WanderingElements({
     maxDuration = 150,
     verticalRangeStart = 5,
     verticalRangeEnd = 95,
-    wobbleAmplitude = 20,
+    wobbleAmplitude = 28,
     wobbleSpeed = 0.25,
     rotationAmount = 6,
     direction = "leftToRight",
@@ -148,7 +148,7 @@ export default function WanderingElements({
                         if (offset.side === 0) offset.side = dy < 0 ? -1 : 1
                         const proximity = 1 - distance / radius
                         const strength = proximity * proximity * (3 - 2 * proximity)
-                        avoidY = offset.side * strength * 22
+                        avoidY = offset.side * strength * 36
                     } else offset.side = 0
                 } else offset.side = 0
                 offset.y += (avoidY - offset.y) * easing
