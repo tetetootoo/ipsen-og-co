@@ -20,7 +20,7 @@ export default function WanderingElements({
     wobbleAmplitude = 28,
     wobbleSpeed = 0.25,
     rotationAmount = 6,
-    direction = "leftToRight",
+    direction = "topToBottom",
     fadeEdge = 10,
     backgroundColor = "transparent",
 }) {
@@ -79,6 +79,7 @@ export default function WanderingElements({
         const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
 
         const dir = direction === "rightToLeft" ? -1 : 1
+        const vertical = direction === "topToBottom"
         let pointer = null
         let previousTime = null
         const offsets = wanderers.map(() => ({ y: 0, side: 0 }))
@@ -109,16 +110,20 @@ export default function WanderingElements({
                 const el = itemRefs.current[i]
                 if (!el) return
 
-                const travel = width + w.size * 2
+                const imageWidth = el.offsetWidth || w.size
+                const travel = (vertical ? height : width) + w.size * 2
                 const progress = (elapsed / w.duration + w.startOffset) % 1
-                const x =
+                const drift =
                     dir === 1
                         ? progress * travel - w.size
                         : width - progress * travel + w.size
 
                 const wobble =
                     Math.sin(elapsed * wobbleSpeed + w.phase) * wobbleAmplitude
-                const y = Math.max(0, Math.min(height - w.size, w.laneY * Math.max(0, height - w.size) + wobble))
+                const crossLimit = Math.max(0, vertical ? width - imageWidth : height - w.size)
+                const lane = Math.max(0, Math.min(crossLimit, w.laneY * crossLimit + wobble))
+                const x = vertical ? lane : drift
+                const y = vertical ? drift : lane
                 const rotation =
                     Math.sin(elapsed * wobbleSpeed * 0.6 + w.rotationPhase) *
                     rotationAmount
@@ -137,23 +142,22 @@ export default function WanderingElements({
                 let avoidY = 0
                 const offset = offsets[i]
                 if (pointer && bounds && !reducedMotion.matches) {
-                    const imageWidth = el.offsetWidth || w.size
                     const dx = bounds.left + x + imageWidth / 2 - pointer.x
                     const dy = bounds.top + y + w.size / 2 - pointer.y
                     const distance = Math.hypot(dx, dy)
                     const radius = Math.max(imageWidth, w.size) / 2 + 100
                     if (distance < radius) {
                         // Hold one bend direction throughout an encounter;
-                        // horizontal drift continues without orbiting the cursor.
-                        if (offset.side === 0) offset.side = dy < 0 ? -1 : 1
+                        // forward drift continues without orbiting the cursor.
+                        if (offset.side === 0) offset.side = (vertical ? dx : dy) < 0 ? -1 : 1
                         const proximity = 1 - distance / radius
                         const strength = proximity * proximity * (3 - 2 * proximity)
                         avoidY = offset.side * strength * 36
                     } else offset.side = 0
                 } else offset.side = 0
                 offset.y += (avoidY - offset.y) * easing
-                const displacedY = Math.max(0, Math.min(Math.max(0, height - w.size), y + offset.y))
-                el.style.transform = `translate(${x}px, ${displacedY}px) rotate(${rotation}deg)`
+                const displacedLane = Math.max(0, Math.min(crossLimit, lane + offset.y))
+                el.style.transform = `translate(${vertical ? displacedLane : x}px, ${vertical ? y : displacedLane}px) rotate(${rotation}deg)`
                 el.style.opacity = String(Math.max(0, opacity))
             })
 
